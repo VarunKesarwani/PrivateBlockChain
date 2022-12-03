@@ -48,6 +48,17 @@ touch password.txt
 vim password.txt
 :wq
 
+initalize node
+cd node1
+geth --datadir ./data init ../blockpoa.json
+
+cd node2
+geth --datadir ./data init ../blockpoa.json
+
+cd node3
+geth --datadir ./data init ../blockpoa.json
+
+
 Start Nodes
 
 Bootnode : bootnode -nodekey ./boot.key -verbosity 7 -addr 127.0.0.1:30301
