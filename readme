@@ -17,7 +17,7 @@ geth --datadir ./data account new
 
 Creete Genesis json
 puppeth
-blockpoa
+genesis
 
 cd node1
 geth --datadir ./data init ../blockpoa.json
@@ -50,13 +50,13 @@ vim password.txt
 
 initalize node
 cd node1
-geth --datadir ./data init ../blockpoa.json
+geth --datadir ./data init ../genesis.json
 
 cd node2
-geth --datadir ./data init ../blockpoa.json
+geth --datadir ./data init ../genesis.json
 
 cd node3
-geth --datadir ./data init ../blockpoa.json
+geth --datadir ./data init ../genesis.json
 
 
 Start Nodes
