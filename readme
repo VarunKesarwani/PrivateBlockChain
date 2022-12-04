@@ -56,8 +56,11 @@ geth --datadir ./data init ../genesis.json
 
 
 Start Nodes
-
 Bootnode : bootnode -nodekey ./boot.key -verbosity 7 -addr 127.0.0.1:30301
-Node 1: geth --networkid 14343 --datadir ./data --bootnodes enode://7f7532d340eaa5d31b62c0122b38792612608d2c66b93e65cd96fd6aad185a45a059879791b7a6f8e8dc6839eee84930addc9010d6e54a2f9cb58bc39d159664@127.0.0.1:0?discport=30301 --port 30303 --ipcdisable --syncmode 'full' --http --allow-insecure-unlock --http.corsdomain “*” --http.port 8545 --unlock '0xD619C79d392370D607e6058165f39fC4B54F11F8' --password password_1.txt --mine console
-Node 2: geth --networkid 14343 --datadir ./data --bootnodes enode://7f7532d340eaa5d31b62c0122b38792612608d2c66b93e65cd96fd6aad185a45a059879791b7a6f8e8dc6839eee84930addc9010d6e54a2f9cb58bc39d159664@127.0.0.1:0?discport=30301 --port 30306 --ipcdisable --syncmode 'full' --http --allow-insecure-unlock --http.corsdomain “*” --http.port 9546 --unlock '0x1DFCCf5823b376436469Ce16d721fdDD530AA829' --password password.txt console
-Node 3: geth --networkid 14343 --datadir ./data --bootnodes enode://7f7532d340eaa5d31b62c0122b38792612608d2c66b93e65cd96fd6aad185a45a059879791b7a6f8e8dc6839eee84930addc9010d6e54a2f9cb58bc39d159664@127.0.0.1:0?discport=30301 --port 30305 --ipcdisable --syncmode 'full' --http --allow-insecure-unlock --http.corsdomain “*” --http.port 8547 --unlock '0xcaFDD9A201711D4c4E5dA78AB929f72BD50Bd1D0' --password password.txt console
+Node 1: geth --networkid 14343 --datadir ./data --bootnodes enode://7f7532d340eaa5d31b62c0122b38792612608d2c66b93e65cd96fd6aad185a45a059879791b7a6f8e8dc6839eee84930addc9010d6e54a2f9cb58bc39d159664@127.0.0.1:0?discport=30301 --port 30303 --ipcdisable --syncmode 'full' --http --allow-insecure-unlock --http.corsdomain “*” --http.port 8545 --authrpc.addr localhost --authrpc.port 8551 --authrpc.vhosts localhost --authrpc.jwtsecret data/geth/jwtsecret --unlock '0xD619C79d392370D607e6058165f39fC4B54F11F8' --password password_1.txt --mine console
+
+Node 2: geth --networkid 14343 --datadir ./data --bootnodes enode://7f7532d340eaa5d31b62c0122b38792612608d2c66b93e65cd96fd6aad185a45a059879791b7a6f8e8dc6839eee84930addc9010d6e54a2f9cb58bc39d159664@127.0.0.1:0?discport=30301 --port 30305 --ipcdisable --syncmode 'full' --http --allow-insecure-unlock --http.corsdomain “*” --http.port 8546 --authrpc.addr localhost --authrpc.port 8553 --authrpc.vhosts localhost --authrpc.jwtsecret data/geth/jwtsecret --unlock '0x1DFCCf5823b376436469Ce16d721fdDD530AA829' --password password.txt console
+
+Node 3: geth --networkid 14343 --datadir ./data --bootnodes enode://7f7532d340eaa5d31b62c0122b38792612608d2c66b93e65cd96fd6aad185a45a059879791b7a6f8e8dc6839eee84930addc9010d6e54a2f9cb58bc39d159664@127.0.0.1:0?discport=30301 --port 30307 --ipcdisable --syncmode 'full' --http --allow-insecure-unlock --http.corsdomain “*” --http.port 8547 --authrpc.addr localhost --authrpc.port 8555 --authrpc.vhosts localhost --authrpc.jwtsecret data/geth/jwtsecret --unlock '0xcaFDD9A201711D4c4E5dA78AB929f72BD50Bd1D0' --password password.txt console
+
+   
