@@ -26,8 +26,12 @@ bootnode -genkey boot.key
 
 Create Password text file
 cd node1
-touch password.txt
-vim password.txt
+touch password_1.txt
+vim password_1.txt
+:wq
+
+touch password_2.txt
+vim password_2.txt
 :wq
 
 cd node2
