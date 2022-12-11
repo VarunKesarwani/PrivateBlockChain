@@ -74,3 +74,11 @@ Curl Operation
 curl -X POST http://127.0.0.1:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0xD619C79d392370D607e6058165f39fC4B54F11F8","latest"], "id":1}'
 curl -X POST http://127.0.0.1:8545 -H "Content-Type: application/json" --data '{"jsonrpc": "2.0","id": 1,"method": "admin_peers","params": []}'
 curl -X POST http://127.0.0.1:8545 -H "Content-Type: application/json" --data '{"jsonrpc": "2.0","id": 2,"method": "eth_blockNumber","params": []}'
+
+Contract
+https://www.tutorialspoint.com/solidity/index.htm
+https://medium.com/robhitchens/solidity-crud-part-1-824ffa69509a
+https://bitbucket.org/rhitchens2/soliditycrud/src/master/contracts/SolidityCRUD-part2.sol
+https://www.youtube.com/watch?v=CgXQC4dbGUE
+https://www.youtube.com/watch?v=nvw27RCTaEw
+https://github.com/smallbatch-apps/fairline-contract
