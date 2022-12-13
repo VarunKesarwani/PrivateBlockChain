@@ -17,14 +17,15 @@ contract FlightContract {
         SCHEDULED,
         DEPARTED,
         DELAYED,
-        CANCELLED
+        LANDED,
+        CANCELLED,
+        CONCLUDED
     }
     enum FlightBookingStatus {
         PRESALE,
         SALE,
         READY,
         CLOSED,
-        LANDED,
         FINALISED,
         CANCELLED
     }
@@ -48,6 +49,7 @@ contract FlightContract {
 
     struct FlightData {
         uint8 FlightNumber;
+        address FlightAdress;
         address Airline;
         bytes32 ScheduleData;
         bytes32 ScheduleTime;
@@ -68,6 +70,7 @@ contract FlightContract {
     ) {
         _flightData = FlightData({
             FlightNumber: _flightNumber,
+            FlightAdress: address(0),
             Airline: _airlineAddress,
             ScheduleData: _ScheduleData,
             ScheduleTime: _scheduleTime,
@@ -136,11 +139,20 @@ contract FlightContract {
         return false;
     }
 
+    function getFlightPrice () public view returns(uint){
+        return _ticketPrice;
+    }
+
+    function getAvailablity () public view returns(uint){
+        return _seatsRemaining;
+    }
+
     /* Flight Operation*/
     
     function initiateFlight(uint8 _seatNumber,uint8 _price) public {
         _seatsRemaining = _seatNumber;
         _ticketPrice = _price;
+        _flightData.FlightAdress = address(0);
         _flightData.RunningStatus = FlightRunningStatus.SCHEDULED;
         _flightData.BookingStatus = FlightBookingStatus.SALE; 
     }
@@ -148,5 +160,34 @@ contract FlightContract {
 
     function cancelFlight() public {
         _flightData.RunningStatus = FlightRunningStatus.CANCELLED;
+        _flightData.BookingStatus = FlightBookingStatus.CANCELLED;
     }
+
+    function delayFlight(bytes32 _delayTime) public {
+        _flightData.RunningStatus = FlightRunningStatus.DELAYED;
+        _flightData.ScheduleTime = _delayTime;
+    }
+
+    function readyFlight(bytes32 _delayTime) public {
+        _flightData.BookingStatus = FlightBookingStatus.READY;
+        _flightData.ScheduleTime = _delayTime;
+        // increase price of ticket
+    }
+
+    function departFlight() public {
+        _flightData.BookingStatus = FlightBookingStatus.CLOSED;
+        _flightData.RunningStatus = FlightRunningStatus.DEPARTED;
+    }
+
+    function completeFlight() public {
+        _flightData.BookingStatus = FlightBookingStatus.CLOSED;
+        _flightData.RunningStatus = FlightRunningStatus.LANDED;
+    }
+    function concludeFlight() public {
+        _flightData.BookingStatus = FlightBookingStatus.FINALISED;
+        _flightData.RunningStatus = FlightRunningStatus.DEPARTED;
+        // calculate total cost for a flight from _flightSeatList
+    }
+
+
 }

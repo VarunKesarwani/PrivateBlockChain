@@ -3,6 +3,8 @@
 //pragma solidity 0.8.6;
 pragma solidity >=0.7.0 <0.9.0;
 
+import "./AirlineBaseContract.sol";
+
 interface TransactionBaseContract {
     // Customer Specific functions
     function book(address _guessAdress, uint8 _seatNumber) external payable;
@@ -17,6 +19,7 @@ interface TransactionBaseContract {
     
     function getFlightStatus(uint8 _flightNumber) external;
     function getPrice(uint8 _flightNumber) external;
+    function getAvailableSeat(uint8 _flightNumber) external;
     function getPendingSeat(uint8 _flightNumber) external;
 }
 
