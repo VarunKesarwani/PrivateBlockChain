@@ -90,18 +90,40 @@ geth --datadir ./data init ../genesis.json
 
 
 Start Nodes
-Bootnode : bootnode -nodekey ./boot.key -verbosity 7 -addr 127.0.0.1:30301
-Node 1: 
-geth --networkid 14343 --datadir ./data --bootnodes enode://19f6404497d32516e4d2924cca33e74f0c80b8d263346af2c2b037fd89541fa5c871654834dcd78c9859a159eb647ea5b3e5e3fad4b4b4f1b3bd0249ac8b18f4@127.0.0.1:0?discport=30301 --port 30303 --ipcdisable --syncmode 'full' --http --allow-insecure-unlock --http.corsdomain “*” --http.port 8545 --authrpc.addr localhost --authrpc.port 8551 --authrpc.vhosts localhost --authrpc.jwtsecret data/geth/jwtsecret --unlock '0xDCbf389D99de999908dc8Fe6f1efED2f9a3Df860' --password password.txt --mine console
+Bootnode : 
+bootnode -nodekey ./boot.key -verbosity 7 -addr 127.0.0.1:30301
+
+Node 1: With RPC Address
+geth --networkid 15353 --datadir ./data --bootnodes enode://2b9d1bb1a254ddb3cc2ae10ff5942f0c9379af8ddeef399d3416d8ad1a0a1761367f8606d8ddb68e63454acc80f857c237607d1bd39c1d47835ebad1cc99ae22@34.234.64.33:0?discport=30301 --port 30303 --ipcdisable --syncmode 'full' --http --allow-insecure-unlock --http.corsdomain “*” --http.port 8545 --authrpc.addr localhost --authrpc.port 8546 --authrpc.vhosts localhost --authrpc.jwtsecret data/geth/jwtsecret --unlock '0x41538cE5B0fBcF4C06828E1A786CeBD2136938fb' --password password_1.txt --mine console
+
+Node 1: Without RPC (We are using this)
+geth --datadir ./data --syncmode 'full' --networkid 15353 --bootnodes enode://c72726aa6ac60b1e90cbb6b16beea27f19f7cd9af98c7eac4a29dd59f87e6a38a9d141b1921a52863b5d5e3372411f5d5631496fa276b58eceed5118c4de5520@127.0.0.1:0?discport=30301 --port 30303 --http --http.corsdomain “*” --http.port 8545 --http.vhosts '*' --authrpc.port 8546 --http.api admin,eth,miner,net,txpool,personal,web3 --unlock '0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3' --allow-insecure-unlock --password password_1.txt --mine console 
+
 
 Node 2: 
 geth --networkid 14343 --datadir ./data --bootnodes enode://7f7532d340eaa5d31b62c0122b38792612608d2c66b93e65cd96fd6aad185a45a059879791b7a6f8e8dc6839eee84930addc9010d6e54a2f9cb58bc39d159664@127.0.0.1:0?discport=30301 --port 30305 --ipcdisable --syncmode 'full' --http --allow-insecure-unlock --http.corsdomain “*” --http.port 8546 --authrpc.addr localhost --authrpc.port 8553 --authrpc.vhosts localhost --authrpc.jwtsecret data/geth/jwtsecret --unlock '0x1DFCCf5823b376436469Ce16d721fdDD530AA829' --password password.txt console
 
-Node 3: geth --networkid 14343 --datadir ./data --bootnodes enode://7f7532d340eaa5d31b62c0122b38792612608d2c66b93e65cd96fd6aad185a45a059879791b7a6f8e8dc6839eee84930addc9010d6e54a2f9cb58bc39d159664@127.0.0.1:0?discport=30301 --port 30307 --ipcdisable --syncmode 'full' --http --allow-insecure-unlock --http.corsdomain “*” --http.port 8547 --authrpc.addr localhost --authrpc.port 8555 --authrpc.vhosts localhost --authrpc.jwtsecret data/geth/jwtsecret --unlock '0xcaFDD9A201711D4c4E5dA78AB929f72BD50Bd1D0' --password password.txt console
+Node 3: 
+geth --networkid 14343 --datadir ./data --bootnodes enode://7f7532d340eaa5d31b62c0122b38792612608d2c66b93e65cd96fd6aad185a45a059879791b7a6f8e8dc6839eee84930addc9010d6e54a2f9cb58bc39d159664@127.0.0.1:0?discport=30301 --port 30307 --ipcdisable --syncmode 'full' --http --allow-insecure-unlock --http.corsdomain “*” --http.port 8547 --authrpc.addr localhost --authrpc.port 8555 --authrpc.vhosts localhost --authrpc.jwtsecret data/geth/jwtsecret --unlock '0xcaFDD9A201711D4c4E5dA78AB929f72BD50Bd1D0' --password password.txt console
 
    
 Curl Operation
-curl -X POST http://127.0.0.1:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0xD619C79d392370D607e6058165f39fC4B54F11F8","latest"], "id":1}'
+curl -X POST http://127.0.0.1:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
+
+curl -X POST http://127.0.0.1:30303 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
+
+curl -X POST http://127.0.0.1:8546 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
+
+curl -X POST http://ec2-18-234-224-70.compute-1.amazonaws.com:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
+
+curl -X POST http://ec2-18-234-224-70.compute-1.amazonaws.com:30303 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
+
+
+curl -X POST http://18.234.224.70:8546 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
+
+curl -X POST http://3.87.95.132:30303 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x41538cE5B0fBcF4C06828E1A786CeBD2136938fb","latest"], "id":1}'
+
+
 curl -X POST http://127.0.0.1:8545 -H "Content-Type: application/json" --data '{"jsonrpc": "2.0","id": 1,"method": "admin_peers","params": []}'
 curl -X POST http://127.0.0.1:8545 -H "Content-Type: application/json" --data '{"jsonrpc": "2.0","id": 2,"method": "eth_blockNumber","params": []}'
 
