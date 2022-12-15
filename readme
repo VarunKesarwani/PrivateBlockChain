@@ -3,6 +3,36 @@ sudo add-apt-repository -y ppa:ethereum/ethereum
 sudo apt-get update
 sudo apt-get install ethereum
 
+Install Nettool
+sudo apt install net-tools
+
+Check Open Port
+-- Using Nettool
+sudo netstat -l (All)
+sudo netstat -lt (TCP Only)
+netstat -tlpen | grep 8080
+
+-- iptable
+sudo iptables -L -n
+
+-- Firewall
+sudo ufw status
+sudo ufw enable
+sudo ufw allow 8545/tcp
+sudo ufw disable
+
+-- lsof
+sudo lsof -i tcp
+sudo lsof -nP | grep LISTEN
+
+-- nmap
+sudo nmap 54.89.64.58
+sudo nmap -sP 172.31.17.39
+
+
+Delete Dir
+rmdir node1
+rm -r node1
 
 Create Node and Account manully
 mkdir GethPrivateBlockchain
@@ -11,7 +41,7 @@ mkdir node1 node2 node3 bnode
 
 
 cd node1
-geth --datadir ./data account new
+geth --datadir ./data account new 
 geth --datadir ./data account new
 
 cd node2
@@ -22,7 +52,7 @@ geth --datadir ./data account new
 
 Creete Genesis json
 puppeth
-nwtwork name - genesis
+network name - genesis
 
 Create Bootnode
 cd bnode
