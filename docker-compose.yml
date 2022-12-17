@@ -42,29 +42,6 @@ services:
     networks:
       priv-eth-net:
 
-  geth-rpc-endpoint-1:
-    hostname: geth-rpc-endpoint
-    env_file:
-      - .env
-    image: geth-client
-    depends_on:
-      - geth-bootnode    
-    command:
-      --bootnodes="enode://af22c29c316ad069cf48a09a4ad5cf04a251b411e45098888d114c6dd7f489a13786620d5953738762afa13711d4ffb3b19aa5de772d8af72f851f7e9c5b164a@geth-bootnode:30301"
-      --syncmode 'full'
-      --allow-insecure-unlock
-      --http
-      --http.addr="0.0.0.0"
-      --http.api="eth,web3,net,admin,personal"
-      --http.corsdomain="*"
-      --networkid=${NETWORK_ID}
-      --netrestrict="172.16.254.0/28"
-    ports:
-      - "30303:30303"
-      - "8545:8545"
-    networks:
-      priv-eth-net-1:
-
   geth-miner:
     hostname: geth-miner
     env_file:
@@ -82,11 +59,6 @@ services:
       priv-eth-net:
 
 networks:
-  priv-eth-net-1:
-    driver: bridge
-    ipam:
-      config:
-      - subnet: 172.16.254.0/28
   priv-eth-net:
     driver: bridge
     ipam:
