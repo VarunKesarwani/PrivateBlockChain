@@ -215,6 +215,7 @@ Private Network
 https://geth.ethereum.org/docs/getting-started/dev-mode
 https://hackernoon.com/how-to-set-up-a-private-ethereum-blockchain-proof-of-authority-with-go-ethereum-part-1
 https://medium.com/scb-digital/running-a-private-ethereum-blockchain-using-docker-589c8e6a4fe8
+https://medium.com/@andrenit/buildind-an-ethereum-playground-with-docker-part-1-introduction-80be173aaa7a#.o1ifv82wn
 
 Contracts:
 https://www.tutorialspoint.com/solidity/index.htm
