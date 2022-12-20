@@ -29,172 +29,119 @@ remove - rm 4649-harmony.json
 rename - mv 4649.json genesis.json
 
 Create Node and Account manully:
-mkdir GethPrivateBlockchain
-cd GethPrivateBlockchain
-mkdir node1 node2 node3 bnode
+mkdir GethPrivateBlockchainNetwork
+cd GethPrivateBlockchainNetwork
+mkdir node1 node2 node3 bnode bashfile
 
+-- Create 4 account
 geth --datadir ./node1/data account new 
+echo '0x9D3ff0e525Fc319B4C1F7a67304A25EB2F58869A' >> accounts.txt
 geth --datadir ./node1/data account new
+echo '0x5fddd02F36Ced752393ef29479B298B07E6dE510' >> accounts.txt
 geth --datadir ./node1/data account new
+echo '0x4DBF8823e5028b001A0C144D24A2e21c8d77f6d5' >> accounts.txt
 geth --datadir ./node1/data account new
-geth --datadir ./node1/data account new
-geth --datadir ./node1/data account new
+echo '0x8f30D33eEac4E81449d3101AD04adf56C589D2E1' >> accounts.txt
 
 geth --datadir ./node2/data account new
+echo '0x774B999fc4F8Fd2Aca5EA52Eff0aA5ed80d2663a' >> accounts.txt
 geth --datadir ./node2/data account new
+echo '0x6Ad0A9c65FEaEa0287ec601Cda5216591eCE6Fb6' >> accounts.txt
 
 geth --datadir ./node3/data account new
+echo '0x774B999fc4F8Fd2Aca5EA52Eff0aA5ed80d2663a' >> accounts.txt
 geth --datadir ./node3/data account new
-geth --datadir ./node3/data account new
+echo '0x774B999fc4F8Fd2Aca5EA52Eff0aA5ed80d2663a' >> accounts.txt
 
-Save Account Details:
-echo '0x8ccbCfDc030fa09Fb6Fdc20924B3cec35b08d8AC' >> accounts.txt
-echo '0x7Bb542DEd40d0E6Bd01a1bAe39ec5E9984f36E48' >> accounts.txt
+
 
 Save Password Details:
-echo 'abc@123' >> node1/password_1.txt
+echo 'abc@123' >> password.txt
+
+-- If password is different for each account
+echo 'abc@123' >> node1/password_2.txt
 echo 'abc@123' >> node1/password_2.txt
 echo 'abc@123' >> node1/password_3.txt
 echo 'abc@123' >> node1/password_4.txt
-echo 'abc@123' >> node1/password_5.txt
-echo 'abc@123' >> node1/password_6.txt
 
 echo 'abc@123' >> node2/password_1.txt
 echo 'abc@123' >> node2/password_2.txt
-echo 'abc@123' >> node3/password_3.txt
 
 echo 'abc@123' >> node3/password_1.txt
-echo 'abc@123' >> node3/password_2.txt
-echo 'abc@123' >> node3/password_3.txt
+
+copy bash file to server:
+scp -i "Gl-PrivateBlockchain-MainNode-01.pem" C:/Users/varun.gupta/Documents/Varun/Study/GL_Material/BlockChain/CapstoneProject/bashfile/bnode.sh ubuntu@ec2-54-159-12-187.compute-1.amazonaws.com:/home/ubuntu/GethPrivateBlockchainNetwork/bashfile
+
+scp -i "Gl-PrivateBlockchain-MainNode-01.pem" C:/Users/varun.gupta/Documents/Varun/Study/GL_Material/BlockChain/CapstoneProject/bashfile/node1.sh ubuntu@ec2-54-159-12-187.compute-1.amazonaws.com:/home/ubuntu/GethPrivateBlockchainNetwork/bashfile
+
+scp -i "Gl-PrivateBlockchain-MainNode-01.pem" C:/Users/varun.gupta/Documents/Varun/Study/GL_Material/BlockChain/CapstoneProject/bashfile/node2.sh ubuntu@ec2-54-159-12-187.compute-1.amazonaws.com:/home/ubuntu/GethPrivateBlockchainNetwork/bashfile
+
+scp -i "Gl-PrivateBlockchain-MainNode-01.pem" C:/Users/varun.gupta/Documents/Varun/Study/GL_Material/BlockChain/CapstoneProject/bashfile/node3.sh ubuntu@ec2-54-159-12-187.compute-1.amazonaws.com:/home/ubuntu/GethPrivateBlockchainNetwork/bashfile
 
 Create Bootnode:
-cd ..
-cd bnode
-bootnode -genkey boot.key
+bootnode -genkey bnode/boot.key
 
+Copy Bashfile
+vim bashfile/node1.sh
+-- To Close (esc -> :wq)
+vim bashfile/node2.sh
+vim bashfile/node3.sh
+vim bashfile/bnode.sh
+(or)
+scp -i "Gl-PrivateBlockchain-MainNode.pem" ..\BashFile\node1.sh ubuntu@ec2-18-212-75-108.compute-1.amazonaws.com:/home/ubuntu/GethPrivateBlockchainNetwork/bashfile
 
 Creete Genesis json:
-cd 
 puppeth
 network name - genesis
 Network ID - 15353
 --ctrl+D
 
-initalize node:
+Initialize node:
 geth --datadir ./node1/data init ./genesis.json
 geth --datadir ./node2/data init ./genesis.json
 geth --datadir ./node3/data init ./genesis.json
 
-Bootnode to get enode Address: 
-cd bnode
-bootnode -nodekey ./boot.key -verbosity 7 -addr 127.0.0.1:30301
-stop for now: ctrl+C
--- Copy encode address
+cd
+chmod +x /home/ubuntu/GethPrivateBlockchainNetwork/bashfile/bnode.sh
+chmod +x /home/ubuntu/GethPrivateBlockchainNetwork/bashfile/node1.sh
+chmod +x /home/ubuntu/GethPrivateBlockchainNetwork/bashfile/node2.sh
+chmod +x /home/ubuntu/GethPrivateBlockchainNetwork/bashfile/node3.sh
 
-Create bash file:
-touch node1/node1.sh 
-touch node2/node2.sh 
-touch node3/node3.sh 
+cd GethPrivateBlockchainNetwork
 
-vim node1/node1.sh
-# Node 1
-nohup geth \
---datadir ./node1/data \
---networkid 15353 \
---syncmode 'full' \
---ipcdisable \
---bootnodes $1 \
---port 30303 \
---http \
---http.corsdomain “*” \
---http.port 8545 \
---http.addr $2 \
---http.vhosts '*' \
---http.api admin,eth,miner,net,txpool,personal,web3,debug \
---authrpc.port 8551 \ 
---unlock '$3' \ 
---allow-insecure-unlock \
---password password_1.txt \ 
---mine console &
-
-echo "Node 1 Start"
-
-:wq
-
-vim node2/node2.sh
-# Node 2
-nohup geth \
---datadir ./node2/data \
---networkid 15353 \
---syncmode 'full' \
---ipcdisable \
---bootnodes $1 \
---port 30305 \
---http \
---http.corsdomain “*” \
---http.port 8546 \
---http.addr $2 \
---http.vhosts '*' \
---http.api admin,eth,miner,net,txpool,personal,web3 \
---authrpc.port 8552 \ 
---unlock '$3' \ 
---allow-insecure-unlock \
---password password_1.txt \ 
-console &
-echo "Node 2 Start"
-:wq
-
-vim node3/node3.sh
-# Node 3
-nohup geth \
---datadir ./node3/data \
---networkid 15353 \
---syncmode 'full' \
---ipcdisable \
---bootnodes $1 \
---port 30307 \
---http \
---http.corsdomain “*” \
---http.port 8547 \
---http.addr $2 \
---http.vhosts '*' \
---http.api admin,eth,miner,net,txpool,personal,web3 \
---authrpc.port 8553 \ 
---unlock '$3' \ 
---allow-insecure-unlock \
---password password_1.txt \ 
-console &
-echo "Node 2 Start"
-:wq
-
+Download Keystore files to local:
+scp -r -i "Gl-PrivateBlockchain-MainNode-01.pem" ubuntu@ec2-54-159-12-187.compute-1.amazonaws.com:/home/ubuntu/GethPrivateBlockchainNetwork/node1/data/keystore .
+scp -r -i "Gl-PrivateBlockchain-MainNode-01.pem" ubuntu@ec2-54-159-12-187.compute-1.amazonaws.com:/home/ubuntu/GethPrivateBlockchainNetwork/node2/data/keystore .
+scp -r -i "Gl-PrivateBlockchain-MainNode-01.pem" ubuntu@ec2-54-159-12-187.compute-1.amazonaws.com:/home/ubuntu/GethPrivateBlockchainNetwork/node3/data/keystore .
 
 Start Nodes
 Bootnode : 
-bootnode -nodekey ./bnode/boot.key -verbosity 7 -addr <Private IP>:30301
+bash bashfile/bnode.sh 172.31.92.25
+
+Enode Address:
+enode://5d3e9f76827172f0a5adca0255d2afc0125acc4c812f89ec6defe9fc4e0e6cce528ef77bb181648032e93e0186b88f8f74b95d724617d6e163c01031f68fec4d@172.31.92.25:0?discport=30301
 
 Open new ternimal
-cd GethPrivateBlockchain
-sh node1/node1.sh <enode addr> <Private IP> <Account>
+bash node1/node1.sh <enode addr> <Private IP> <Account>
+bash bashfile/node1.sh enode://5d3e9f76827172f0a5adca0255d2afc0125acc4c812f89ec6defe9fc4e0e6cce528ef77bb181648032e93e0186b88f8f74b95d724617d6e163c01031f68fec4d@172.31.92.25:0?discport=30301 172.31.92.25 0x9D3ff0e525Fc319B4C1F7a67304A25EB2F58869A
 
 Open new ternimal
-cd GethPrivateBlockchain
-sh node2/node2.sh <enode addr> <Private IP> <Account>
-
+bash node2/node2.sh <enode addr> <Private IP> <Account>
+bash bashfile/node2.sh enode://5d3e9f76827172f0a5adca0255d2afc0125acc4c812f89ec6defe9fc4e0e6cce528ef77bb181648032e93e0186b88f8f74b95d724617d6e163c01031f68fec4d@172.31.92.25:0?discport=30301 172.31.92.25 0xf674AB2132d826E09EDB3AaA98B865165F2ba055
 Open new ternimal
-cd GethPrivateBlockchain
-sh node3/node3.sh <enode addr> <Private IP> <Account>
-
---Open new ternimal for General operation
+bash node3/node3.sh <enode addr> <Private IP> <Account>
+bash bashfile/node3.sh enode://5d3e9f76827172f0a5adca0255d2afc0125acc4c812f89ec6defe9fc4e0e6cce528ef77bb181648032e93e0186b88f8f74b95d724617d6e163c01031f68fec4d@172.31.92.25:0?discport=30301 172.31.92.25 0x774B999fc4F8Fd2Aca5EA52Eff0aA5ed80d2663a
 
 Curl Operation:
 Node1 Account:
-curl -X POST http://127.0.0.1:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
+curl -X POST http://172.31.92.25:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x9D3ff0e525Fc319B4C1F7a67304A25EB2F58869A","latest"], "id":1}'
 
 Node2 Account:
 curl -X POST http://127.0.0.1:8546 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
 
 Node1 Account from local:
-curl -X POST http://<Public IP>:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
+curl -X POST http://<Public IP>:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x9D3ff0e525Fc319B4C1F7a67304A25EB2F58869A","latest"], "id":1}'
+curl -X POST http://54.159.12.187:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x9D3ff0e525Fc319B4C1F7a67304A25EB2F58869A","latest"], "id":1}'
 
 Node2 Account from local:
 curl -X POST http://<Public IP>:8546 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
