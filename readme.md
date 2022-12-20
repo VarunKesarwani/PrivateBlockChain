@@ -96,6 +96,9 @@ network name - genesis
 Network ID - 15353
 --ctrl+D
 
+Download Genesis File:
+scp -r -i "Gl-PrivateBlockchain-MainNode-01.pem" ubuntu@ec2-54-159-12-187.compute-1.amazonaws.com:/home/ubuntu/GethPrivateBlockchainNetwork/genesis.json .
+
 Initialize node:
 geth --datadir ./node1/data init ./genesis.json
 geth --datadir ./node2/data init ./genesis.json
