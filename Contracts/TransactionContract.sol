@@ -25,7 +25,7 @@ interface TransactionBaseContract {
 
 contract TransactionContract {
     constructor (){
-
+        
     }
 
 }
