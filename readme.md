@@ -97,7 +97,8 @@ Network ID - 15353
 --ctrl+D
 
 Download Genesis File:
-scp -r -i "Gl-PrivateBlockchain-MainNode-01.pem" ubuntu@ec2-54-159-12-187.compute-1.amazonaws.com:/home/ubuntu/GethPrivateBlockchainNetwork/genesis.json .
+scp -r -i "Gl-PrivateBlockchain-MainNode-01.pem" ubuntu@ec2-3-85-36-4.compute-1.amazonaws.com:/home/ubuntu/GethPrivateBlockchainNetwork/genesis.json .
+ssh -i "Gl-PrivateBlockchain-MainNode-01.pem" ubuntu@ec2-3-85-36-4.compute-1.amazonaws.com
 
 Initialize node:
 geth --datadir ./node1/data init ./genesis.json
@@ -131,6 +132,7 @@ bash bashfile/node1.sh enode://5d3e9f76827172f0a5adca0255d2afc0125acc4c812f89ec6
 Open new ternimal
 bash node2/node2.sh <enode addr> <Private IP> <Account>
 bash bashfile/node2.sh enode://5d3e9f76827172f0a5adca0255d2afc0125acc4c812f89ec6defe9fc4e0e6cce528ef77bb181648032e93e0186b88f8f74b95d724617d6e163c01031f68fec4d@172.31.92.25:0?discport=30301 172.31.92.25 0xf674AB2132d826E09EDB3AaA98B865165F2ba055
+
 Open new ternimal
 bash node3/node3.sh <enode addr> <Private IP> <Account>
 bash bashfile/node3.sh enode://5d3e9f76827172f0a5adca0255d2afc0125acc4c812f89ec6defe9fc4e0e6cce528ef77bb181648032e93e0186b88f8f74b95d724617d6e163c01031f68fec4d@172.31.92.25:0?discport=30301 172.31.92.25 0x774B999fc4F8Fd2Aca5EA52Eff0aA5ed80d2663a
@@ -140,15 +142,15 @@ Node1 Account:
 curl -X POST http://172.31.92.25:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x9D3ff0e525Fc319B4C1F7a67304A25EB2F58869A","latest"], "id":1}'
 
 Node2 Account:
-curl -X POST http://127.0.0.1:8546 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
+curl -X POST http://172.31.92.25:8546 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0xf674AB2132d826E09EDB3AaA98B865165F2ba055","latest"], "id":1}'
 
 Node1 Account from local:
 curl -X POST http://<Public IP>:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x9D3ff0e525Fc319B4C1F7a67304A25EB2F58869A","latest"], "id":1}'
-curl -X POST http://54.159.12.187:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x9D3ff0e525Fc319B4C1F7a67304A25EB2F58869A","latest"], "id":1}'
+curl -X POST http://3.85.36.4:8545 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x9D3ff0e525Fc319B4C1F7a67304A25EB2F58869A","latest"], "id":1}'
 
 Node2 Account from local:
-curl -X POST http://<Public IP>:8546 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0x7B3413D90564F5E9A9Fe4206Cc2383c2eAB386c3","latest"], "id":1}'
-
+curl -X POST http://<Public IP>:8546 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0xf674AB2132d826E09EDB3AaA98B865165F2ba055","latest"], "id":1}'
+curl -X POST http://3.85.36.4:8546 -H "Content-Type: application/json" --data '{"jsonrpc":"2.0", "method":"eth_getBalance", "params":["0xf674AB2132d826E09EDB3AaA98B865165F2ba055","latest"], "id":1}'
 
 curl -X POST http://<Public IP>:8545 -H "Content-Type: application/json" --data '{"jsonrpc": "2.0","id": 1,"method": "admin_peers","params": []}'
 curl -X POST http://<Public IP>:8545 -H "Content-Type: application/json" --data '{"jsonrpc": "2.0","id": 2,"method": "eth_blockNumber","params": []}'
