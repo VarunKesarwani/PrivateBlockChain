@@ -6,11 +6,12 @@ pragma solidity >=0.7.0 <0.9.0;
 import "./AirlineBaseContract.sol";
 
 interface TransactionBaseContract {
+    function addAirline() external;
     // Customer Specific functions
-    function book(address _guessAdress, uint8 _seatNumber) external payable;
+    function book(address _guessAdress, uint8 _seatNumber, uint8 _flightNumber,address _airline) external payable;
     function cancelBooking(address _guestAdress) external payable;
     function requestRefund(address guest) external;
-    function settleFlight(address airline) external;
+    //function settleFlight(address airline) external;
 
 
     function getSeatByUuid(bytes32 uuid) external view returns(uint, bytes32, address, address, uint);
@@ -24,8 +25,17 @@ interface TransactionBaseContract {
 }
 
 contract TransactionContract {
+    //mapping(bytes32 => mapping(address)) _airlineList;
     constructor (){
         
+    }
+    function addAirline(address airline,bytes32 Name) public{
+        // _airlineList. 
+    }
+
+    function book(address _guessAdress, uint8 _seatNumber, uint8 _flightNumber,address _airline) public{
+        // look inside _airlineList
+
     }
 
 }

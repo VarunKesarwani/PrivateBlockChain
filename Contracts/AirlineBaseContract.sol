@@ -6,6 +6,7 @@ pragma solidity >=0.7.0 <0.9.0;
 import "./FlightContract.sol";
 
 interface AirlineBaseContract {
+    function book() external;
     function schduleFlight(
         uint8 _flightNumber,
         bytes32 _scheduleData,
@@ -26,7 +27,6 @@ interface AirlineBaseContract {
 
     function landFlight(uint8 _flightNumber) external; // after 24 hours of departure, may cancel will very minimal refund
 
-
     function concludeFlight(uint8 _flightNumber) external; // after 24 hours of landing, final settlement to airline
 
     function cancelFlight(uint8 _flightNumber) external; // full refund if before 24 hours of departure, refund plus penalty if after 24 hours
@@ -39,6 +39,10 @@ contract EagleAirlineContract is AirlineBaseContract {
 
     uint[] private _listOfFlight;
 
+    function book() public {
+        
+    }
+    
     function schduleFlight(
         uint8 _flightNumber,
         bytes32 _scheduleData,
@@ -113,6 +117,10 @@ contract TigerAirlineContract is AirlineBaseContract {
     mapping(uint16 => mapping(address => FlightContract)) _flightList;
 
     uint[] private _listOfFlight;
+
+    function book() public {
+        
+    }
 
     function schduleFlight(
         uint8 _flightNumber,
